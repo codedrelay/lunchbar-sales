@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lunch Bar Quick Sale</title>
+  <style>
+    :root{
+      --bg:#f3f4f6;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --orange1:#f7b267;
+      --orange2:#fce38a;
+      --blue:#1d9bf0;
+      --green:#22c55e;
+      --purple:#8b5cf6;
+      --shadow:0 10px 25px rgba(0,0,0,0.08);
+      --radius:24px;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      padding:20px 16px 40px;
+    }
+
+    .app{
+      max-width:430px;
+      margin:0 auto;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .topbar h1{
+      font-size:24px;
+      font-weight:800;
+    }
+
+    .badge{
+      background:linear-gradient(90deg,#ff4d8d,#f8b133);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
+
+    .hero{
+      background:linear-gradient(180deg,var(--orange1),var(--orange2));
+      border-radius:32px;
+      padding:22px 20px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .hero-top{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .circle{
+      width:125px;
+      height:125px;
+      border-radius:50%;
+      border:10px solid rgba(255,255,255,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:32px;
+      font-weight:800;
+      color:#fff;
+      background:rgba(255,255,255,0.18);
+      flex-shrink:0;
+    }
+
+    .hero-stats{
+      flex:1;
+    }
+
+    .hero-stats p{
+      font-size:18px;
+      font-weight:700;
+      color:#fff;
+      margin-bottom:10px;
+      text-shadow:0 1px 1px rgba(0,0,0,0.1);
+    }
+
+    .main-btn{
+      width:100%;
+      border:none;
+      background:#fff;
+      color:var(--blue);
+      font-size:18px;
+      font-weight:800;
+      border-radius:999px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .mini-card{
+      background:var(--card);
+      border-radius:24px;
+      padding:18px 14px;
+      box-shadow:var(--shadow);
+      min-height:138px;
+    }
+
+    .mini-icon{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      margin-bottom:14px;
+    }
+
+    .blue{ background:#d9f2ff; }
+    .green{ background:#dcfce7; }
+    .purple{ background:#ede9fe; }
+
+    .mini-card h3{
+      font-size:17px;
+      margin-bottom:8px;
+    }
+
+    .mini-card p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.35;
+      font-weight:600;
+    }
+
+    .section{
+      background:var(--card);
+      border-radius:28px;
+      padding:20px 16px;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
+    }
+
+    .section h2{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .sub{
+      color:#8b8f98;
+      font-size:14px;
+      margin-bottom:16px;
+      font-weight:600;
+    }
+
+    .tools-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px 10px;
+    }
+
+    .tool{
+      text-align:center;
+    }
+
+    .tool button{
+      width:100%;
+      border:none;
+      background:#f9fafb;
+      border-radius:18px;
+      padding:14px 8px;
+      box-shadow:inset 0 0 0 1px #eef0f3;
+      font-weight:700;
+      color:var(--text);
+      min-height:74px;
+    }
+
+    .tool span{
+      display:block;
+      font-size:13px;
+      margin-top:8px;
+      color:#3f3f46;
+      font-weight:700;
+      line-height:1.2;
+    }
+
+    .form-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    input, select{
+      width:100%;
+      border:none;
+      background:#f3f4f6;
+      border-radius:16px;
+      padding:14px;
+      font-size:15px;
+      outline:none;
+    }
+
+    .full{
+      margin-top:12px;
+    }
+
+    .action-btn{
+      width:100%;
+      border:none;
+      border-radius:18px;
+      padding:15px;
+      font-size:16px;
+      font-weight:800;
+      margin-top:12px;
+    }
+
+    .cash{ background:#d1fae5; color:#065f46; }
+    .credit{ background:#ede9fe; color:#5b21b6; }
+    .stock{ background:#dbeafe; color:#1d4ed8; }
+    .danger{ background:#fee2e2; color:#b91c1c; }
+
+    .history-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .history-item{
+      background:#f9fafb;
+      border-radius:16px;
+      padding:12px 14px;
+      border:1px solid #eef0f3;
+    }
+
+    .history-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:4px;
+      font-weight:800;
+    }
+
+    .history-bottom{
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .empty{
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+      padding:10px 0 4px;
+      font-weight:600;
+    }
+
+    @media (max-width:380px){
+      .grid-3,
+      .tools-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .form-row{
+        grid-template-columns:1fr;
+      }
+
+      .hero-top{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <h1>Lunch Bar Sales</h1>
+      <div class="badge">SCHOOL SHOP</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-top">
+        <div class="circle" id="stockPercent">0%</div>
+        <div class="hero-stats">
+          <p>Total Stock: <span id="totalStock">0</span> bars</p>
+          <p>Remaining: <span id="remainingStock">0</span> bars</p>
+          <p>Sold Today: <span id="soldToday">0</span> bars</p>
+          <p>Cash + Credit: $<span id="totalMoney">0.00</span></p>
+        </div>
+      </div>
+      <button class="main-btn" onclick="quickSellOne()">Quick Sell 1 Bar</button>
+    </div>
+
+    <div class="grid-3">
+      <div class="mini-card">
+        <div class="mini-icon blue">💵</div>
+        <h3>Cash</h3>
+        <p>Total cash sales collected today.</p>
+        <p style="margin-top:10px;font-size:18px;color:#111827;">$<span id="cashSales">0.00</span></p>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-icon green">📒</div>
+        <h3>Credit</h3>
+        <p>Total credit sales given out today.</p>
+        <p style="margin-top:10px;font-size:18px;color:#111827;">$<span id="creditSales">0.00</span></p>
+      </div>
+
+      <div class="mini-card">
+        <div class="mini-icon purple">📦</div>
+        <h3>Price</h3>
+        <p>Current selling price per lunch bar.</p>
+        <p style="margin-top:10px;font-size:18px;color:#111827;">$<span id="priceView">0.50</span></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Quick Sales</h2>
+      <p class="sub">Tap once to make fast sales during break time.</p>
+
+      <div class="tools-grid">
+        <div class="tool">
+          <button onclick="sellFixed(1,'cash')">🍫 1 Bar</button>
+          <span>Cash Sale</span>
+        </div>
+        <div class="tool">
+          <button onclick="sellFixed(2,'cash')">🍫 2 Bars</button>
+          <span>Cash Sale</span>
+        </div>
+        <div class="tool">
+          <button onclick="sellFixed(3,'cash')">🍫 3 Bars</button>
+          <span>Cash Sale</span>
+        </div>
+        <div class="tool">
+          <button onclick="sellFixed(1,'credit')">📝 1 Bar</button>
+          <span>Credit Sale</span>
+        </div>
+        <div class="tool">
+          <button onclick="sellFixed(2,'credit')">📝 2 Bars</button>
+          <span>Credit Sale</span>
+        </div>
+        <div class="tool">
+          <button onclick="sellFixed(3,'credit')">📝 3 Bars</button>
+          <span>Credit Sale</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Custom Sale</h2>
+      <p class="sub">Enter any quantity and choose cash or credit.</p>
+
+      <div class="form-row">
+        <input type="number" id="qtyInput" placeholder="Quantity" min="1" />
+        <select id="typeInput">
+          <option value="cash">Cash</option>
+          <option value="credit">Credit</option>
+        </select>
+      </div>
+
+      <input class="full" type="text" id="nameInput" placeholder="Customer name (for credit only)" />
+
+      <button class="action-btn cash" onclick="makeCustomSale()">Save Sale</button>
+    </div>
+
+    <div class="section">
+      <h2>Stock & Price</h2>
+      <p class="sub">Update your stock and price whenever you restock.</p>
+
+      <div class="form-row">
+        <input type="number" id="addStockInput" placeholder="Add stock" min="1" />
+        <input type="number" id="priceInput" placeholder="Set price e.g. 0.50" step="0.01" min="0.01" />
+      </div>
+
+      <button class="action-btn stock" onclick="addStock()">Add Stock</button>
+      <button class="action-btn stock" onclick="updatePrice()">Update Price</button>
+      <button class="action-btn danger" onclick="resetDay()">Reset Daily Sales</button>
+    </div>
+
+    <div class="section">
+      <h2>Sales History</h2>
+      <p class="sub">Your latest sales are saved on this phone.</p>
+      <div id="historyList" class="history-list"></div>
+    </div>
+  </div>
+
+  <script>
+    const defaultData = {
+      totalStock: 50,
+      remainingStock: 50,
+      soldToday: 0,
+      cashSales: 0,
+      creditSales: 0,
+      price: 0.50,
+      history: []
+    };
+
+    let appData = loadData();
+
+    function loadData() {
+      const saved = localStorage.getItem("lunchBarSalesApp");
+      return saved ? JSON.parse(saved) : { ...defaultData };
+    }
+
+    function saveData() {
+      localStorage.setItem("lunchBarSalesApp", JSON.stringify(appData));
+    }
+
+    function formatMoney(value) {
+      return Number(value).toFixed(2);
+    }
+
+    function getPercentSold() {
+      if (appData.totalStock <= 0) return 0;
+      return Math.round((appData.soldToday / appData.totalStock) * 100);
+    }
+
+    function render() {
+      document.getElementById("totalStock").textContent = appData.totalStock;
+      document.getElementById("remainingStock").textContent = appData.remainingStock;
+      document.getElementById("soldToday").textContent = appData.soldToday;
+      document.getElementById("cashSales").textContent = formatMoney(appData.cashSales);
+      document.getElementById("creditSales").textContent = formatMoney(appData.creditSales);
+      document.getElementById("totalMoney").textContent = formatMoney(appData.cashSales + appData.creditSales);
+      document.getElementById("priceView").textContent = formatMoney(appData.price);
+      document.getElementById("stockPercent").textContent = getPercentSold() + "%";
+
+      const historyList = document.getElementById("historyList");
+      historyList.innerHTML = "";
+
+      if (appData.history.length === 0) {
+        historyList.innerHTML = '<div class="empty">No sales yet.</div>';
+        return;
+      }
+
+      appData.history.slice().reverse().forEach(item => {
+        const div = document.createElement("div");
+        div.className = "history-item";
+        div.innerHTML = `
+          <div class="history-top">
+            <span>${item.qty} bar(s) - ${item.type.toUpperCase()}</span>
+            <span>$${formatMoney(item.amount)}</span>
+          </div>
+          <div class="history-bottom">
+            <span>${item.name ? item.name : "Walk-in customer"}</span>
+            <span>${item.time}</span>
+          </div>
+        `;
+        historyList.appendChild(div);
+      });
+    }
+
+    function addHistory(qty, type, amount, name = "") {
+      const now = new Date();
+      const time = now.toLocaleString();
+      appData.history.push({ qty, type, amount, name, time });
+
+      if (appData.history.length > 20) {
+        appData.history = appData.history.slice(-20);
+      }
+    }
+
+    function sellBars(qty, type, name = "") {
+      qty = Number(qty);
+
+      if (!qty || qty < 1) {
+        alert("Enter a valid quantity.");
+        return;
+      }
+
+      if (appData.remainingStock < qty) {
+        alert("Not enough stock left.");
+        return;
+      }
+
+      const amount = qty * appData.price;
+
+      appData.remainingStock -= qty;
+      appData.soldToday += qty;
+
+      if (type === "cash") {
+        appData.cashSales += amount;
+      } else {
+        appData.creditSales += amount;
+      }
+
+      addHistory(qty, type, amount, name);
+      saveData();
+      render();
+    }
+
+    function quickSellOne() {
+      sellBars(1, "cash");
+    }
+
+    function sellFixed(qty, type) {
+      let name = "";
+      if (type === "credit") {
+        name = prompt("Enter customer name for credit sale:") || "";
+      }
+      sellBars(qty, type, name);
+    }
+
+    function makeCustomSale() {
+      const qty = document.getElementById("qtyInput").value;
+      const type = document.getElementById("typeInput").value;
+      const name = document.getElementById("nameInput").value.trim();
+
+      if (type === "credit" && name === "") {
+        alert("Enter customer name for credit sale.");
+        return;
+      }
+
+      sellBars(qty, type, name);
+
+      document.getElementById("qtyInput").value = "";
+      document.getElementById("nameInput").value = "";
+    }
+
+    function addStock() {
+      const value = Number(document.getElementById("addStockInput").value);
+
+      if (!value || value < 1) {
+        alert("Enter stock to add.");
+        return;
+      }
+
+      appData.totalStock += value;
+      appData.remainingStock += value;
+
+      saveData();
+      render();
+      document.getElementById("addStockInput").value = "";
+    }
+
+    function updatePrice() {
+      const value = Number(document.getElementById("priceInput").value);
+
+      if (!value || value <= 0) {
+        alert("Enter a valid price.");
+        return;
+      }
+
+      appData.price = value;
+      saveData();
+      render();
+      document.getElementById("priceInput").value = "";
+    }
+
+    function resetDay() {
+      const ok = confirm("Reset sold today, cash sales, credit sales and history?");
+      if (!ok) return;
+
+      appData.soldToday = 0;
+      appData.cashSales = 0;
+      appData.creditSales = 0;
+      appData.history = [];
+
+      saveData();
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
